@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Monte a seleção do Brasileirão</title>
+<meta name="description" content="Monte a sua seleção do Brasileirão 2026: escolha o time, o técnico, o craque e a revelação sub-20, com o modelo do canal do Canedo e dados do Brasileirão em Dados. Salve a imagem para o story ou o feed.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Monte a sua seleção do Brasileirão 2026">
+<meta property="og:description" content="Escolha o time, o técnico, o craque e a revelação sub-20. Salve a imagem e poste. Por @vcanedo.">
+<meta property="og:url" content="https://vcanedo88.github.io/selecao-brasileirao/">
+<meta property="og:image" content="https://vcanedo88.github.io/selecao-brasileirao/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/c.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: o canal falando com o torcedor — direto, de prancheta, sem enfeite
+   IDEIA: a prancheta do treinador; você escala o time e cada escolha mostra o número que a sustenta
+   PICTURE: o campo escuro com fotos e escudos, que vira a arte de story ou feed
+   COLOUR and TYPE: base branca, cinza e preto do canal; roxo #400078 só no destaque e no C; Poppins
+   LAYOUT: campo à esquerda, opções da posição à direita; abaixo de 860px, campo e depois a lista */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#121316);--ink:light-dark(#111214,#f1f1f3);--mut:light-dark(#62666e,#a3a7af);
+--line:light-dark(#e5e6ea,#2a2c31);--card:light-dark(#f6f6f8,#1b1c20);--acc:light-dark(#400078,#b48cff);
+--accbg:light-dark(#f1e9fa,#2a1f3a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Poppins,system-ui,sans-serif;overflow-x:clip}
+button{font:inherit;color:inherit}
+header{padding:clamp(16px,2.4vw,32px) max(4vw,16px) 8px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:start;max-width:1240px;margin:0 auto}
+h1{font-size:clamp(26px,3.4vw,40px);line-height:1.05;margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+.sub{margin:4px 0 0;color:var(--mut);font-size:15px;max-width:70ch}
+.partner{font-size:13px;color:var(--mut);text-align:right}
+.hdr-r{display:flex;flex-direction:column;align-items:flex-end;gap:8px;margin-left:auto}
+.brlogo{height:clamp(52px,6vw,76px);width:auto}
+@media(max-width:600px){header{grid-template-columns:minmax(0,1fr)}header>div:first-child{order:2}.hdr-r{flex-direction:row;align-items:center;margin-left:0;width:100%;justify-content:space-between}.brlogo{height:48px}.partner{text-align:left}}
+.partner b{color:var(--ink);font-weight:600}
+.app{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(16px,2.5vw,32px);padding:8px max(4vw,16px) 24px;max-width:1240px;margin:0 auto;align-items:start}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.btn{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:500;cursor:pointer;min-height:38px}
+.btn:hover{border-color:var(--acc)}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+:root[data-theme=dark] .btn.pri{color:#160a24}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .btn.pri{color:#160a24}}
+.btn:focus-visible,.opt:focus-visible,.slot:focus-visible,.seg button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:none;border-radius:999px;padding:5px 11px;font-size:13px;cursor:pointer;min-height:32px;font-weight:500}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);font-weight:600}
+.seg[hidden],.seg button[hidden]{display:none}
+.forms{margin-bottom:10px}
+.pitch{position:relative;width:min(100%,560px,calc((100vh - 330px)*68/86));min-width:min(100%,300px);aspect-ratio:68/86;margin:0 auto;border-radius:14px;overflow:hidden;
+background:repeating-linear-gradient(180deg,#1a231d 0 9.09%,#1d2720 9.09% 18.18%)}
+.pitch svg{position:absolute;inset:0;width:100%;height:100%}
+.slot{position:absolute;transform:translate(-50%,-50%);width:20%;max-width:104px;background:none;border:0;padding:4px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;color:#fff;border-radius:12px;transition:left .3s,top .3s}
+.slot .av{position:relative;width:clamp(36px,8vw,52px);aspect-ratio:1;border-radius:50%;background:#2c3530;border:2px dashed rgba(255,255,255,.45);display:grid;place-items:center;font-weight:600;font-size:14px}
+.slot.full .av{border:2px solid #fff;background:#e9eaee}
+.av img.ph{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.slot .av .ini{color:#3a3d44}
+.slot .crest{position:absolute;right:-6px;bottom:-4px;width:46%;height:46%;object-fit:contain;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5))}
+.slot .nm{font-size:12px;font-weight:600;line-height:1.15;text-align:center;text-shadow:0 1px 2px rgba(0,0,0,.6);max-width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.slot .ps{font-size:10px;font-weight:600;letter-spacing:.04em;opacity:.7;line-height:1}
+.slot.on .av{outline:3px solid #c9a6ff;outline-offset:3px}
+.slot.on .ps{opacity:1;color:#d9c2ff}
+.slot{touch-action:none;user-select:none;-webkit-user-select:none}
+.av .rm{position:absolute;left:-7px;top:-7px;width:24px;height:24px;border-radius:50%;background:#111214;color:#fff;border:2px solid #fff;font-size:15px;line-height:19px;text-align:center;font-weight:700;cursor:pointer;z-index:2}
+.av .rm:hover{background:#400078}
+.av .cq{position:absolute;right:-7px;top:-7px;width:24px;height:24px;border-radius:50%;background:#111214;color:#9aa0a8;border:2px solid #fff;font-size:13px;line-height:20px;text-align:center;cursor:pointer;z-index:2}
+.av .cq:hover{color:#f5b301}
+.av .cq.on{background:#f5b301;color:#111214;border-color:#fff}
+.slot.craque .av{box-shadow:0 0 0 3px #f5b301}
+.slot.craque .nm{color:#ffd65c}
+.slot.drop .av{outline:3px solid #8ef0b0;outline-offset:3px}
+.tec{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;max-width:560px;margin:10px auto 0}
+.tec .slot{position:static;transform:none;width:auto;max-width:none;flex-direction:row;gap:12px;background:#1a231d;padding:8px 18px 8px 8px;border-radius:999px;transition:none}
+.tec .slot .av{width:46px}
+.tec .slot .nm{font-size:13px;text-align:left}
+.tec .slot .ps{font-size:12px}
+.ghost{position:fixed;z-index:30;width:58px;height:58px;border-radius:50%;background:#e9eaee;border:3px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,.35);pointer-events:none;transform:translate(-50%,-60%);display:grid;place-items:center;font-weight:700;color:#3a3d44;overflow:hidden}
+.ghost img{width:100%;height:100%;object-fit:cover}
+.opt{user-select:none;-webkit-user-select:none}
+.slot img,.opt img{-webkit-user-drag:none;user-drag:none}
+.hint{font-size:12px;color:var(--mut);text-align:center;margin:6px 0 0}
+.sum{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-width:560px;margin:12px auto 0}
+.sum div{background:var(--card);border-radius:12px;padding:10px 12px}
+.sum b{display:block;font-size:24px;line-height:1.1;font-variant-numeric:tabular-nums}
+.sum span{font-size:13px;color:var(--mut)}
+.clubs{display:flex;flex-wrap:wrap;gap:6px 10px;max-width:560px;margin:10px auto 0;font-size:13px;color:var(--mut);align-items:center}
+.clubs i{display:inline-flex;align-items:center;gap:4px;font-style:normal;color:var(--ink);font-weight:500}
+.clubs img{width:20px;height:20px;object-fit:contain}
+.panel{position:sticky;top:12px}
+.ph2{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.ph2 h2{margin:0;font-size:24px;line-height:1.1}
+.ph2 small{color:var(--mut);font-size:13px}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.list{display:flex;flex-direction:column;gap:8px;max-height:calc(100vh - 230px);overflow-y:auto;padding:2px 4px 2px 2px}
+.opt{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:4px 12px;align-items:center;text-align:left;width:100%;background:var(--card);border:2px solid transparent;border-radius:14px;padding:10px 12px;cursor:pointer}
+.opt:hover{border-color:var(--line)}
+.opt.sel{border-color:var(--acc);background:var(--accbg)}
+.opt.used{opacity:.5}
+.opt .av{width:52px;height:52px;border-radius:50%;background:#e3e4e8;position:relative;display:grid;place-items:center;font-weight:600;color:#3a3d44;align-self:start}
+.opt .av .crest{position:absolute;right:-4px;bottom:-2px;width:22px;height:22px;object-fit:contain}
+.opt .who b{font-size:16px;font-weight:600}
+.opt .who span{display:block;font-size:13px;color:var(--mut);line-height:1.3}
+.opt .who .st span{display:inline;font-size:13px}
+.opt .who .st{display:flex}
+.opt .mod{text-align:right;align-self:start}
+.opt .mod b{font-size:26px;line-height:1;font-variant-numeric:tabular-nums}
+.opt .mod span{display:block;font-size:11px;color:var(--mut);white-space:nowrap}
+.opt .st{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:13px;color:var(--mut);margin-top:3px}
+.opt .mod .nt{display:block;margin-top:6px;font-size:13px;color:var(--ink);font-weight:600;white-space:nowrap}
+.opt .mod .nt small{display:block;font-size:11px;color:var(--mut);font-weight:400}
+.opt .st em{font-style:normal;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:11px;font-weight:600;color:var(--acc);margin-left:6px}
+.ix{background:var(--card);border-radius:12px;padding:10px 14px;margin:0 0 10px;font-size:14px}
+.ix summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:8px;min-height:28px;align-items:center}
+.ix summary::-webkit-details-marker{display:none}
+.ix summary::after{content:'+';font-size:18px;color:var(--acc)}
+.ix[open] summary::after{content:'–'}
+.ix p{margin:6px 0}
+.ix ol{margin:6px 0 4px;padding-left:20px}
+.ix .lead{color:var(--mut);font-weight:400}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+#toast.show{opacity:1}
+dialog{border:0;border-radius:16px;padding:16px;max-width:min(94vw,560px);background:var(--bg);color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog .prev{display:block;max-width:100%;max-height:62vh;margin:10px auto;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+dialog .row{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}
+dialog p{font-size:13px;color:var(--mut);margin:6px 0 0}
+footer{max-width:1240px;margin:0 auto;padding:8px max(4vw,16px) 40px;font-size:13px;color:var(--mut);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end}
+footer p{margin:0 0 6px;max-width:90ch}
+footer .sig{display:flex;align-items:center;gap:8px;color:var(--ink);font-weight:600}
+footer .sig img{height:28px}
+@media(max-width:860px){.app{grid-template-columns:minmax(0,1fr)}.panel{position:static}.list{max-height:none}footer{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:420px){.slot .nm{font-size:10.5px}.sum b{font-size:20px}.opt{grid-template-columns:44px minmax(0,1fr) auto;padding:10px}.opt .av{width:44px;height:44px}}
+@media(prefers-reduced-motion:reduce){.slot{transition:none}}
+.forms{border-radius:18px;flex-wrap:wrap;display:inline-grid;grid-template-columns:repeat(4,auto)}.forms .brk{display:none}
+@media(max-width:600px){.forms{grid-template-columns:repeat(2,auto)}}
+.flag{width:16px;height:11px;vertical-align:-1px;margin-left:3px;display:inline-block}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Monte a sua seleção do Brasileirão 2026</h1>
+    <p class="sub">Escolha a formação, toque numa vaga do campo e escale, ou arraste os jogadores. As opções saem do modelo do canal, com alguns nomes acrescentados, e os técnicos entram pelo aproveitamento. No fim, salve a imagem para o story ou o feed.</p>
+  </div>
+  <div class="hdr-r"><img class="brlogo" src="img/br.png" alt="Brasileirão"><div class="partner">Dados: <b>Brasileirão em Dados</b>, Sofascore e FotMob<br>Até a 36ª rodada · 24/11/2026</div></div>
+</header>
+
+<main class="app">
+  <section aria-label="Campo">
+    <div class="seg forms" id="forms" role="group" aria-label="Formação"></div>
+    <div class="tools">
+      <button class="btn" id="pModel" title="O maior modelo em cada vaga">Time do modelo</button>
+      <button class="btn" id="pClear">Limpar</button>
+      <button class="btn pri" id="art">Salvar a imagem</button>
+    </div>
+    <div class="pitch" id="pitch">
+      <svg viewBox="0 0 68 86" preserveAspectRatio="none" aria-hidden="true">
+        <g fill="none" stroke="rgba(255,255,255,.28)" stroke-width=".35">
+          <rect x="2" y="2" width="64" height="82"/><line x1="2" y1="43" x2="66" y2="43"/><circle cx="34" cy="43" r="7"/>
+          <rect x="14" y="2" width="40" height="14"/><rect x="24" y="2" width="20" height="5"/>
+          <rect x="14" y="70" width="40" height="14"/><rect x="24" y="79" width="20" height="5"/>
+          <path d="M27.5 16a7.5 7.5 0 0 0 13 0M27.5 70a7.5 7.5 0 0 1 13 0"/>
+        </g>
+      </svg>
+    </div>
+    <div class="tec" id="tecRow"></div>
+    <p class="hint">Toque na ★ em cima da foto para escolher o craque do seu time. Arraste um jogador da lista para qualquer vaga, ou entre vagas para trocar; dá para improvisar alguém fora da posição. No celular, segure o card da lista um instante antes de arrastar.</p>
+    <div class="sum">
+      <div><b id="sMod">–</b><span>modelo médio do time</span></div>
+      <div><b id="sGA">–</b><span>gols + assistências</span></div>
+    </div>
+    <div class="clubs" id="clubs"></div>
+  </section>
+
+  <section class="panel" aria-label="Opções">
+    <div class="ph2"><h2 id="pTitle">GOL</h2><span style="display:flex;gap:10px;align-items:center"><button class="btn" id="rmBtn" hidden>Tirar da vaga</button><small id="pCount"></small></span></div>
+    <div class="ctrl">
+      <div class="seg" id="filt" role="group" aria-label="Posição">
+        <button data-f="GOL">GOL</button><button data-f="LD">LD</button><button data-f="LE">LE</button><button data-f="ZAG">ZAG</button><button data-f="VOL">VOL</button><button data-f="MEI">MEI</button><button data-f="ATA">ATA</button><button data-f="TEC">TÉC</button><button data-f="S20">SUB-20 <svg class="flag" viewBox="0 0 20 14" aria-label="Brasil" role="img"><rect width="20" height="14" rx="1.5" fill="#009c3b"/><path d="M10 1.6 18.4 7 10 12.4 1.6 7z" fill="#ffdf00"/><circle cx="10" cy="7" r="3.1" fill="#002776"/></svg></button>
+      </div>
+      <div class="seg" id="sort" role="group" aria-label="Ordenar por">
+        <button data-s="mod" aria-pressed="true">Modelo</button><button data-s="nota" aria-pressed="false">Nota</button><button data-s="ga" aria-pressed="false">G + A</button>
+      </div>
+    </div>
+    <details class="ix"><summary><span>O que é o modelo? <span class="lead" id="ixLead"></span></span></summary>
+      <p>O <b>modelo</b> vai de 0 a 100. A base junta duas coisas, com o mesmo peso, e depois entra um bônus de gols:</p>
+      <p><b>1. Índice do canal.</b> Compara o jogador só com quem joga na mesma posição e passou de 1.440 minutos (16 jogos inteiros). Para cada estatística abaixo, vemos acima de quantos por cento da posição ele está; o índice é a média dessas colocações, de novo numa escala de 0 a 100. As contagens são por 90 minutos, para não favorecer quem jogou mais.</p>
+      <ol id="ixList"></ol>
+      <p><b>2. Nota.</b> A média das notas do Sofascore e do FotMob no Brasileirão, também comparada com a da posição (0 a 100).</p>
+      <p><b>3. Bônus de gols.</b> Gols e assistências por 90 minutos (gol de pênalti vale meio), comparados com a mesma posição. Quem está no topo da posição ganha até 30% do que faltava para chegar a 100; quem não participa de gols não perde nada. Goleiro não tem bônus.</p>
+      <p><b>Quem pode entrar:</b> jogadores com pelo menos 1.440 minutos no Brasileirão, o equivalente a 16 jogos inteiros. É o mesmo grupo usado nas comparações do índice, da nota e do bônus.</p>
+      <p>O índice mostra o que o jogador fez com e sem a bola; a nota resume o jogo inteiro. Nenhum dos dois pesa o nível do adversário ou o estilo do time: zagueiro de time que tem a bola defende menos e tende a ter índice menor.</p>
+    </details>
+    <div class="list" id="list"></div>
+  </section>
+</main>
+
+<footer>
+  <div>
+    <p><b>Modelo (0 a 100):</b> média simples entre o índice do canal e o percentil da nota (Sofascore + FotMob) entre os jogadores da mesma posição com 1.440+ minutos (16 jogos inteiros), mais um bônus de gols e assistências por 90 (pênalti vale meio gol) de até 30% do que falta para 100. Opções: 1.440+ minutos (16 jogos inteiros); sub-20: brasileiros nascidos a partir de 2006 com 750+ minutos. Grupos: 19 goleiros, 37 laterais, 36 zagueiros, 48 volantes, 45 meias e pontas, 22 centroavantes. Pontas são comparados com meias e pontas.</p>
+    <p><b>Fontes:</b> minutos, jogos, gols, assistências e jogos sem sofrer gol do Sofascore (26/11/2026); estatísticas avançadas do índice do Brasileirão em Dados (brasileiraoemdados.com.br), 359 jogos até 24/11/2026; notas médias do Sofascore e do FotMob.</p>
+  </div>
+  <div class="sig"><img src="img/c.png" alt="">@vcanedo</div>
+</footer>
+
+<dialog id="dlg">
+  <div class="row"><div class="seg" id="fmt" role="group" aria-label="Formato"><button data-k="story" aria-pressed="true">Story 9:16</button><button data-k="feed" aria-pressed="false">Feed 4:5</button></div><button class="btn" id="dClose">Fechar</button></div>
+  <img class="prev" id="prev" alt="Prévia da arte da sua seleção">
+  <div class="row"><button class="btn pri" id="dSave">Salvar a imagem</button></div>
+  <p id="dHint">Se o botão não funcionar no seu aparelho, toque e segure a imagem (ou clique com o botão direito) para salvar.</p>
+</dialog>
+<div id="toast" role="status"></div>
+
+<script>
+{
+const D={"players":[{"id":"ronaldo-bah","n":"Ronaldo","c":"BAH","g":"GOL","role":"Goleiro","slot":"GOL","idx":97,"np":95,"mod":96,"ss":7.37,"fm":7.4,"nota":7.38,"min":2384,"apps":27,"gl":0,"as":0,"pen":0,"st":[6.94,81.6,9],"sd":0.34,"ph":"f/ronaldo.jpg","ga":null,"base":97},{"id":"pedro-morisco-cfc","n":"Pedro Morisco","c":"CFC","g":"GOL","role":"Goleiro","slot":"GOL","idx":92,"np":84,"mod":88,"ss":7.29,"fm":7.3,"nota":7.29,"min":1586,"apps":18,"gl":0,"as":0,"pen":0,"st":[3.73,75.7,2],"sd":-0.23,"ph":"f/pedro-morisco.jpg","ga":null,"base":90},{"id":"weverton-gre","n":"Weverton","c":"GRE","g":"GOL","role":"Goleiro","slot":"GOL","idx":87,"np":92,"mod":90,"ss":7.34,"fm":7.26,"nota":7.3,"min":2970,"apps":33,"gl":0,"as":1,"pen":0,"st":[8.18,75.5,10],"sd":-0.09,"ph":"f/weverton.jpg","ga":null,"base":90},{"id":"carlos-miguel-pal","n":"Carlos Miguel","c":"PAL","g":"GOL","role":"Goleiro","slot":"GOL","idx":82,"np":82,"mod":82,"ss":7.19,"fm":7.34,"nota":7.27,"min":3150,"apps":35,"gl":0,"as":0,"pen":0,"st":[4.84,82.7,15],"sd":1.06,"ph":"f/carlos-miguel.jpg","ga":null,"base":79},{"id":"agustín-rossi-fla","n":"Rossi","c":"FLA","g":"GOL","role":"Goleiro","slot":"GOL","idx":71,"np":53,"mod":62,"ss":6.99,"fm":7.04,"nota":7.02,"min":3240,"apps":36,"gl":0,"as":0,"pen":0,"st":[2.29,77.1,14],"sd":1.19,"ph":"f/agustin-rossi.jpg","ga":null,"base":60},{"id":"otávio-cru","n":"Otávio","c":"CRU","g":"GOL","role":"Goleiro","slot":"GOL","idx":45,"np":71,"mod":58,"ss":7.03,"fm":7.15,"nota":7.09,"min":2070,"apps":23,"gl":0,"as":0,"pen":0,"st":[1.65,74.3,4],"sd":0.57,"ph":"f/otavio.jpg","ga":null,"base":60},{"id":"matheuzinho-cor","n":"Matheuzinho","c":"COR","g":"LAT","role":"Lateral-direito","slot":"LD","idx":99,"np":65,"mod":84,"ss":6.91,"fm":7.08,"nota":7.0,"min":2533,"apps":30,"gl":1,"as":3,"pen":0,"st":[2.73,1.88,0.12],"sd":0,"ph":"f/matheuzinho.jpg","ga":39,"base":80},{"id":"igor-formiga-mir","n":"Igor Formiga","c":"MIR","g":"LAT","role":"Lateral-direito","slot":"LD","idx":72,"np":89,"mod":86,"ss":7.03,"fm":7.4,"nota":7.21,"min":2717,"apps":33,"gl":4,"as":5,"pen":0,"st":[3.51,1.03,0.12],"sd":-0.13,"ph":"f/igor-formiga.jpg","ga":88,"base":80},{"id":"guga-flu","n":"Guga","c":"FLU","g":"LAT","role":"Lateral-direito","slot":"LD","idx":74,"np":73,"mod":78,"ss":6.88,"fm":7.31,"nota":7.09,"min":1647,"apps":22,"gl":1,"as":2,"pen":0,"st":[1.66,1.88,0.14],"sd":0.61,"ph":"f/guga.jpg","ga":53,"base":75},{"id":"guillermo-varela-fla","n":"Varela","c":"FLA","g":"LAT","role":"Lateral-direito","slot":"LD","idx":61,"np":82,"mod":79,"ss":6.86,"fm":7.33,"nota":7.1,"min":2329,"apps":28,"gl":1,"as":7,"pen":0,"st":[1.62,1.24,0.1],"sd":1.16,"ph":"f/guillermo-varela.jpg","ga":93,"base":71},{"id":"agustín-giay-pal","n":"Giay","c":"PAL","g":"LAT","role":"Lateral-direito","slot":"LD","idx":26,"np":73,"mod":59,"ss":6.92,"fm":7.26,"nota":7.09,"min":1923,"apps":27,"gl":3,"as":1,"pen":0,"st":[2.4,1.13,0.06],"sd":0.8,"ph":"f/agustin-giay.jpg","ga":61,"base":49},{"id":"lucas-esquivel-cap","n":"Lucas Esquivel","c":"CAP","g":"LAT","role":"Lateral-esquerdo","slot":"LE","idx":96,"np":99,"mod":98,"ss":7.24,"fm":7.34,"nota":7.29,"min":2102,"apps":26,"gl":2,"as":5,"pen":0,"st":[2.35,1.58,0.14],"sd":0.47,"ph":"f/lucas-esquivel.jpg","ga":91,"base":98},{"id":"renê-flu","n":"Renê","c":"FLU","g":"LAT","role":"Lateral-esquerdo","slot":"LE","idx":92,"np":88,"mod":91,"ss":6.99,"fm":7.35,"nota":7.17,"min":2088,"apps":26,"gl":0,"as":2,"pen":0,"st":[2.95,1.43,0.03],"sd":0.48,"ph":"f/rene-flu.jpg","ga":23,"base":90},{"id":"cuiabano-vas","n":"Cuiabano","c":"VAS","g":"LAT","role":"Lateral-esquerdo","slot":"LE","idx":82,"np":82,"mod":86,"ss":6.9,"fm":7.3,"nota":7.1,"min":1867,"apps":26,"gl":1,"as":4,"pen":0,"st":[3.9,1.4,0.13],"sd":0,"ph":"f/cuiabano.jpg","ga":77,"base":82},{"id":"juninho-capixaba-rbb","n":"Juninho Capixaba","c":"RBB","g":"LAT","role":"Lateral-esquerdo","slot":"LE","idx":69,"np":85,"mod":80,"ss":7.01,"fm":7.29,"nota":7.15,"min":2824,"apps":32,"gl":3,"as":2,"pen":0,"st":[2.8,1.43,0.09],"sd":0.22,"ph":"f/juninho-capixaba.jpg","ga":47,"base":76},{"id":"luciano-juba-bah","n":"Luciano Juba","c":"BAH","g":"LAT","role":"Lateral-esquerdo","slot":"LE","idx":50,"np":96,"mod":81,"ss":7.11,"fm":7.45,"nota":7.28,"min":2688,"apps":32,"gl":11,"as":2,"pen":5,"st":[1.88,1.44,0.1],"sd":0.1,"ph":"f/luciano-juba.jpg","ga":96,"base":74},{"id":"alex-telles-bot","n":"Alex Telles","c":"BOT","g":"LAT","role":"Lateral-esquerdo","slot":"LE","idx":77,"np":41,"mod":69,"ss":6.83,"fm":6.95,"nota":6.89,"min":2532,"apps":33,"gl":4,"as":4,"pen":2,"st":[1.74,1.99,0.2],"sd":-0.46,"ph":"f/alex-telles.jpg","ga":80,"base":58},{"id":"jonathan-jesus-cru","n":"Jonathan Jesus","c":"CRU","g":"ZAG","role":"Zagueiro","slot":"ZAG","idx":96,"np":96,"mod":96,"ss":7.15,"fm":7.34,"nota":7.25,"min":2069,"apps":24,"gl":0,"as":0,"pen":0,"st":[3.28,63.8,1.22],"sd":0.48,"ph":"f/jonathan-jesus.jpg","ga":7,"base":94},{"id":"léo-ortiz-fla","n":"Léo Ortiz","c":"FLA","g":"ZAG","role":"Zagueiro","slot":"ZAG","idx":81,"np":96,"mod":90,"ss":7.25,"fm":7.25,"nota":7.25,"min":2615,"apps":31,"gl":1,"as":1,"pen":0,"st":[1.62,61.5,0.86],"sd":1.11,"ph":"f/leo-ortiz.jpg","ga":54,"base":88},{"id":"alexander-barboza-pal","n":"Barboza","c":"PAL","g":"ZAG","role":"Zagueiro","slot":"ZAG","idx":88,"np":82,"mod":89,"ss":7.04,"fm":7.22,"nota":7.13,"min":2080,"apps":25,"gl":2,"as":3,"pen":0,"st":[2.91,70.3,1.17],"sd":0.56,"ph":"f/alexander-barboza.jpg","ga":93,"base":85},{"id":"nahuel-ferraresi-bot","n":"Ferraresi","c":"BOT","g":"ZAG","role":"Zagueiro","slot":"ZAG","idx":90,"np":78,"mod":86,"ss":7.14,"fm":7.11,"nota":7.12,"min":2387,"apps":30,"gl":1,"as":0,"pen":0,"st":[2.65,69,1.44],"sd":-0.3,"ph":"f/nahuel-ferraresi.jpg","ga":32,"base":84},{"id":"fabrício-bruno-cru","n":"Fabrício Bruno","c":"CRU","g":"ZAG","role":"Zagueiro","slot":"ZAG","idx":93,"np":65,"mod":81,"ss":6.98,"fm":7.08,"nota":7.03,"min":2388,"apps":31,"gl":1,"as":0,"pen":0,"st":[1.36,71.1,1.36],"sd":0.11,"ph":"f/fabricio-bruno.jpg","ga":29,"base":79},{"id":"léo-pereira-fla","n":"Léo Pereira","c":"FLA","g":"ZAG","role":"Zagueiro","slot":"ZAG","idx":50,"np":99,"mod":80,"ss":7.25,"fm":7.39,"nota":7.32,"min":2616,"apps":30,"gl":2,"as":1,"pen":0,"st":[1.55,58.6,0.79],"sd":1.41,"ph":"f/leo-pereira.jpg","ga":76,"base":75},{"id":"gustavo-henrique-cor","n":"Gustavo Henrique","c":"COR","g":"ZAG","role":"Zagueiro","slot":"ZAG","idx":68,"np":51,"mod":70,"ss":6.98,"fm":6.94,"nota":6.96,"min":2790,"apps":31,"gl":4,"as":1,"pen":0,"st":[1.17,68.9,1.23],"sd":0,"ph":"f/gustavo-henrique.jpg","ga":85,"base":60},{"id":"gustavo-gómez-pal","n":"Gustavo Gómez","c":"PAL","g":"ZAG","role":"Zagueiro","slot":"ZAG","idx":43,"np":78,"mod":71,"ss":7.08,"fm":7.13,"nota":7.11,"min":2683,"apps":31,"gl":4,"as":1,"pen":0,"st":[1.78,62.1,0.7],"sd":1.04,"ph":"f/gustavo-gomez.jpg","ga":88,"base":58},{"id":"murilo-pal","n":"Murilo","c":"PAL","g":"ZAG","role":"Zagueiro","slot":"ZAG","idx":38,"np":75,"mod":67,"ss":7.04,"fm":7.15,"nota":7.1,"min":2430,"apps":29,"gl":2,"as":1,"pen":0,"st":[2,58.8,0.78],"sd":1.33,"ph":"f/murilo.jpg","ga":79,"base":56},{"id":"jacy-cfc","n":"Jacy","c":"CFC","g":"ZAG","role":"Zagueiro","slot":"ZAG","idx":35,"np":47,"mod":47,"ss":6.94,"fm":6.95,"nota":6.95,"min":2335,"apps":31,"gl":1,"as":0,"pen":0,"st":[2.81,58.4,1.16],"sd":-0.12,"ph":"f/jacy.jpg","ga":35,"base":40},{"id":"arthur-dias-cap","n":"Arthur Dias","c":"CAP","g":"ZAG","role":"Zagueiro","slot":"ZAG","idx":24,"np":44,"mod":38,"ss":6.88,"fm":6.99,"nota":6.94,"min":2709,"apps":32,"gl":1,"as":0,"pen":0,"st":[2.26,51,1.26],"sd":0.27,"ph":"f/arthur-dias.jpg","ga":21,"base":34},{"id":"lucas-romero-cru","n":"Lucas Romero","c":"CRU","g":"MC","role":"Volante","slot":"MEIO","idx":98,"np":91,"mod":96,"ss":7.1,"fm":7.33,"nota":7.21,"min":1893,"apps":25,"gl":2,"as":4,"pen":0,"st":[2.71,5.61,4.85],"sd":0.43,"ph":"f/lucas-romero.jpg","ga":89,"base":96},{"id":"jorge-carrascal-fla","n":"Carrascal","c":"FLA","g":"MP","role":"Meia / ponta-direita","slot":"MEIO","idx":99,"np":90,"mod":96,"ss":7.17,"fm":7.37,"nota":7.27,"min":1591,"apps":29,"gl":8,"as":9,"pen":1,"st":[0.28,4.99,1.82],"sd":1.42,"ph":"f/jorge-carrascal.jpg","ga":99,"base":94},{"id":"thiago-mendes-vas","n":"Thiago Mendes","c":"VAS","g":"MC","role":"Volante","slot":"MEIO","idx":89,"np":97,"mod":95,"ss":7.19,"fm":7.39,"nota":7.29,"min":2619,"apps":32,"gl":6,"as":1,"pen":0,"st":[1.51,6.77,4.74],"sd":-0.03,"ph":"f/thiago-mendes.jpg","ga":84,"base":92},{"id":"jorginho-fla","n":"Jorginho","c":"FLA","g":"MC","role":"Volante","slot":"MEIO","idx":86,"np":94,"mod":92,"ss":7.22,"fm":7.29,"nota":7.25,"min":2244,"apps":29,"gl":4,"as":3,"pen":4,"st":[1.69,5.64,6.24],"sd":1.29,"ph":"f/jorginho.jpg","ga":74,"base":90},{"id":"matheus-pereira-cru","n":"Matheus Pereira","c":"CRU","g":"MP","role":"Meia","slot":"MEIO","idx":79,"np":99,"mod":92,"ss":7.36,"fm":7.82,"nota":7.59,"min":2702,"apps":32,"gl":11,"as":7,"pen":0,"st":[0.23,5.4,0.63],"sd":0.23,"ph":"f/matheus-pereira.jpg","ga":94,"base":90},{"id":"lucho-acosta-flu","n":"Lucho Acosta","c":"FLU","g":"MP","role":"Meia","slot":"MEIO","idx":94,"np":81,"mod":91,"ss":7.07,"fm":7.29,"nota":7.18,"min":1764,"apps":31,"gl":6,"as":5,"pen":0,"st":[0.25,5.15,1.89],"sd":0.92,"ph":"f/lucho-acosta.jpg","ga":92,"base":88},{"id":"erick-pulgar-fla","n":"Pulgar","c":"FLA","g":"MC","role":"Volante","slot":"MEIO","idx":93,"np":81,"mod":89,"ss":6.99,"fm":7.18,"nota":7.08,"min":1941,"apps":25,"gl":2,"as":0,"pen":0,"st":[3.06,4.54,2.69],"sd":1.62,"ph":"f/erick-pulgar.jpg","ga":45,"base":86},{"id":"nicolás-acevedo-bah","n":"Acevedo","c":"BAH","g":"MC","role":"Volante","slot":"MEIO","idx":95,"np":79,"mod":88,"ss":6.95,"fm":7.18,"nota":7.06,"min":2667,"apps":33,"gl":1,"as":1,"pen":0,"st":[3.64,5.84,4.52],"sd":0.24,"ph":"f/nicolas-acevedo.jpg","ga":32,"base":86},{"id":"jhon-arias-pal","n":"Arias","c":"PAL","g":"MP","role":"Ponta-esquerda","slot":"ATA","idx":74,"np":93,"mod":87,"ss":7.18,"fm":7.37,"nota":7.28,"min":2060,"apps":30,"gl":7,"as":4,"pen":0,"st":[0.14,3.54,1.49],"sd":0.87,"ph":"f/jhon-arias.jpg","ga":79,"base":85},{"id":"martinelli-flu","n":"Martinelli","c":"FLU","g":"MC","role":"Volante","slot":"MEIO","idx":80,"np":86,"mod":86,"ss":7.04,"fm":7.26,"nota":7.15,"min":1847,"apps":24,"gl":0,"as":3,"pen":0,"st":[1.66,4.97,3.36],"sd":0.78,"ph":"f/martinelli.jpg","ga":61,"base":82},{"id":"giorgian-de-arrascaeta-fla","n":"Arrascaeta","c":"FLA","g":"MP","role":"Meia","slot":"MEIO","idx":72,"np":87,"mod":83,"ss":7.01,"fm":7.41,"nota":7.21,"min":1780,"apps":26,"gl":4,"as":4,"pen":1,"st":[0.22,4.65,0.76],"sd":0.96,"ph":"f/giorgian-de-arrascaeta.jpg","ga":52,"base":80},{"id":"marlon-freitas-pal","n":"Marlon Freitas","c":"PAL","g":"MC","role":"Volante","slot":"MEIO","idx":67,"np":91,"mod":83,"ss":7.17,"fm":7.25,"nota":7.21,"min":2724,"apps":33,"gl":2,"as":2,"pen":0,"st":[1.62,4.59,4.79],"sd":0.86,"ph":"f/marlon-freitas.jpg","ga":59,"base":76},{"id":"danilo-santos-bot","n":"Danilo Santos","c":"BOT","g":"MC","role":"Volante","slot":"MEIO","idx":26,"np":98,"mod":73,"ss":7.33,"fm":7.3,"nota":7.31,"min":2147,"apps":26,"gl":10,"as":2,"pen":0,"st":[1.3,5.49,4.19],"sd":-0.21,"ph":"f/danilo-santos.jpg","ga":99,"base":62},{"id":"andreas-pereira-pal","n":"Andreas Pereira","c":"PAL","g":"MP","role":"Meia","slot":"MEIO","idx":19,"np":84,"mod":58,"ss":7.12,"fm":7.26,"nota":7.19,"min":2722,"apps":34,"gl":1,"as":10,"pen":0,"st":[0.16,3.8,0.43],"sd":1.19,"ph":"f/andreas-pereira.jpg","ga":48,"base":51},{"id":"gabriel-bontempo-san","n":"Gabriel Bontempo","c":"SAN","g":"MP","role":"Meia","slot":"MEIO","idx":52,"np":46,"mod":49,"ss":6.84,"fm":7.16,"nota":7.0,"min":2179,"apps":31,"gl":1,"as":3,"pen":0,"st":[0.14,3.28,1.2],"sd":-0.08,"ph":"f/gabriel-bontempo.jpg","ga":1,"base":48},{"id":"josué-cfc","n":"Josué","c":"CFC","g":"MP","role":"Meia","slot":"MEIO","idx":10,"np":67,"mod":48,"ss":7.13,"fm":7.14,"nota":7.13,"min":2563,"apps":33,"gl":1,"as":11,"pen":1,"st":[0.21,4.11,0.46],"sd":-0.42,"ph":"f/josue.jpg","ga":54,"base":38},{"id":"samuel-lino-fla","n":"Samuel Lino","c":"FLA","g":"MP","role":"Ponta-esquerda","slot":"ATA","idx":97,"np":96,"mod":98,"ss":7.4,"fm":7.7,"nota":7.55,"min":2445,"apps":35,"gl":13,"as":9,"pen":0,"st":[0.27,4.71,0.88],"sd":1.4,"ph":"f/samuel-lino.jpg","ga":97,"base":97},{"id":"pedro-fla","n":"Pedro","c":"FLA","g":"ATA","role":"Centroavante","slot":"ATA","idx":98,"np":91,"mod":96,"ss":6.99,"fm":7.45,"nota":7.22,"min":2849,"apps":36,"gl":20,"as":6,"pen":0,"st":[20,0.51,1.42],"sd":1.33,"ph":"f/pedro.jpg","ga":98,"base":96},{"id":"gabriel-barbosa-san","n":"Gabriel Barbosa","c":"SAN","g":"ATA","role":"Centroavante","slot":"ATA","idx":93,"np":100,"mod":97,"ss":7.24,"fm":7.47,"nota":7.36,"min":2183,"apps":28,"gl":16,"as":4,"pen":2,"st":[14,0.41,1.32],"sd":0.04,"ph":"f/gabriel-barbosa.jpg","ga":93,"base":96},{"id":"kevin-viveros-cap","n":"Viveros","c":"CAP","g":"ATA","role":"Centroavante","slot":"ATA","idx":89,"np":86,"mod":91,"ss":7.11,"fm":7.26,"nota":7.19,"min":2811,"apps":32,"gl":21,"as":3,"pen":4,"st":[17,0.39,1.63],"sd":0.42,"ph":"f/kevin-viveros.jpg","ga":89,"base":86},{"id":"josé-manuel-lópez-pal","n":"Flaco López","c":"PAL","g":"ATA","role":"Centroavante","slot":"ATA","idx":84,"np":80,"mod":87,"ss":7.05,"fm":7.29,"nota":7.17,"min":2370,"apps":33,"gl":10,"as":7,"pen":0,"st":[10,0.23,1.06],"sd":1.1,"ph":"f/jose-manuel-lopez.jpg","ga":84,"base":81},{"id":"kaio-jorge-cru","n":"Kaio Jorge","c":"CRU","g":"ATA","role":"Centroavante","slot":"ATA","idx":75,"np":91,"mod":87,"ss":7.11,"fm":7.3,"nota":7.21,"min":2219,"apps":28,"gl":14,"as":2,"pen":4,"st":[10,0.29,1.18],"sd":0.45,"ph":"f/kaio-jorge.jpg","ga":70,"base":81},{"id":"tomás-cuello-cam","n":"Cuello","c":"CAM","g":"MP","role":"Ponta-direita","slot":"ATA","idx":88,"np":64,"mod":79,"ss":7.08,"fm":7.13,"nota":7.11,"min":2032,"apps":28,"gl":6,"as":2,"pen":0,"st":[0.23,3.06,1.85],"sd":0.28,"ph":"f/tomas-cuello.jpg","ga":46,"base":75},{"id":"renê-vit","n":"Renê","c":"VIT","g":"ATA","role":"Centroavante","slot":"ATA","idx":66,"np":68,"mod":75,"ss":6.98,"fm":6.85,"nota":6.92,"min":2004,"apps":28,"gl":12,"as":2,"pen":0,"st":[12,0.31,1.44],"sd":0.09,"ph":"f/rene-vit.jpg","ga":80,"base":64},{"id":"leonardo-jardim-fla-tec","n":"Leonardo Jardim","c":"FLA","g":"TEC","role":"Técnico","slot":"TEC","mod":77,"ap":76.8,"j":33,"v":23,"e":7,"l":3,"desde":"04/03/2026","idx":0,"nota":0,"gl":0,"as":0,"min":0,"ph":"f/leonardo-jardim.jpg"},{"id":"artur-jorge-cru-tec","n":"Artur Jorge","c":"CRU","g":"TEC","role":"Técnico","slot":"TEC","mod":74,"ap":73.8,"j":28,"v":20,"e":2,"l":6,"desde":"22/03/2026","idx":0,"nota":0,"gl":0,"as":0,"min":0,"ph":"f/artur-jorge.jpg"},{"id":"abel-ferreira-pal-tec","n":"Abel Ferreira","c":"PAL","g":"TEC","role":"Técnico","slot":"TEC","mod":68,"ap":68.5,"j":36,"v":21,"e":11,"l":4,"desde":"30/10/2020","idx":0,"nota":0,"gl":0,"as":0,"min":0,"ph":"f/abel-ferreira.jpg"},{"id":"marcão-flu-tec","n":"Marcão","c":"FLU","g":"TEC","role":"Técnico","slot":"TEC","mod":67,"ap":66.7,"j":14,"v":9,"e":1,"l":4,"desde":"13/08/2026","idx":0,"nota":0,"gl":0,"as":0,"min":0,"ph":"f/marcao.jpg"},{"id":"odair-hellmann-cap-tec","n":"Odair Hellmann","c":"CAP","g":"TEC","role":"Técnico","slot":"TEC","mod":53,"ap":52.8,"j":36,"v":16,"e":9,"l":11,"desde":"2025","idx":0,"nota":0,"gl":0,"as":0,"min":0,"ph":"f/odair-hellmann.jpg"},{"id":"mauricio-pal","n":"Maurício","c":"PAL","g":"MP","role":"Meia","slot":"MEIO","idx":28,"np":50,"mod":55,"ss":6.97,"fm":7.11,"nota":7.04,"min":1717,"apps":30,"gl":10,"as":1,"pen":1,"st":[0.06,2.25,0.37],"sd":1,"ph":"f/mauricio.jpg","ga":88,"base":40},{"id":"u20-arthur-dias","n":"Arthur Dias","c":"CAP","g":"S20","pg":"ZAG","role":"Zagueiro","min":2709,"apps":32,"gl":1,"as":0,"idx":24,"np":44,"mod":38,"ss":6.88,"fm":6.99,"nota":6.94,"dob":"2007","ph":"f/arthur-dias.jpg","ga":21,"base":34,"pen":0},{"id":"u20-andre","n":"André","c":"COR","g":"S20","pg":"MC","role":"Volante","min":1567,"apps":25,"gl":4,"as":2,"idx":11,"np":8,"mod":35,"ss":6.7,"fm":6.62,"nota":6.66,"dob":"2006","ph":"f/andre-cor.jpg","ga":95,"base":10,"pen":0},{"id":"u20-huguinho","n":"Huguinho","c":"BOT","g":"S20","pg":"MC","role":"Volante","min":1357,"apps":18,"gl":1,"as":0,"idx":54,"np":19,"mod":42,"ss":6.71,"fm":6.76,"nota":6.73,"dob":"2007","ph":"f/huguinho.jpg","ga":31,"base":34,"pen":0},{"id":"u20-joao-cruz","n":"João Cruz","c":"CAP","g":"S20","pg":"MP","role":"Meia","min":1313,"apps":29,"gl":2,"as":7,"idx":71,"np":16,"mod":60,"ss":6.73,"fm":6.96,"nota":6.85,"dob":"2006","ph":"f/joao-cruz.jpg","ga":96,"base":43,"pen":0},{"id":"u20-ryan-augusto","n":"Ryan Augusto","c":"RBB","g":"S20","pg":"LAT","role":"Lateral-direito","min":845,"apps":13,"gl":0,"as":0,"idx":59,"np":68,"mod":64,"ss":6.9,"fm":7.25,"nota":7.08,"dob":"2007","ph":"f/ryan-augusto.jpg","ga":5,"base":62,"pen":0},{"id":"u20-ze-lucas","n":"Zé Lucas","c":"CRU","g":"S20","pg":"MC","role":"Volante","min":794,"apps":15,"gl":2,"as":0,"idx":42,"np":54,"mod":60,"ss":6.86,"fm":6.94,"nota":6.9,"dob":"2008","ph":"f/ze-lucas.jpg","ga":79,"base":46,"pen":0},{"id":"u20-pedro-lima","n":"Pedro Lima","c":"SAO","g":"S20","pg":"LAT","role":"Lateral-direito","min":791,"apps":10,"gl":2,"as":1,"idx":47,"np":68,"mod":70,"ss":7.05,"fm":7.1,"nota":7.07,"dob":"2006","ph":"f/pedro-lima.jpg","ga":95,"base":56,"pen":0},{"id":"u20-vitao","n":"Vitão","c":"CAM","g":"S20","pg":"ZAG","role":"Zagueiro","min":776,"apps":9,"gl":1,"as":0,"idx":94,"np":61,"mod":83,"ss":6.94,"fm":7.07,"nota":7.01,"dob":"2008","ph":"f/vitao.jpg","ga":81,"base":78,"pen":0},{"id":"kaio-cesar-cor","n":"Kaio César","c":"COR","g":"MP","role":"Ponta-direita","slot":"ATA","idx":90,"np":87,"ss":7.14,"fm":7.28,"nota":7.21,"min":1478,"apps":23,"gl":7,"as":2,"pen":0,"st":[0.16,3.59,3.23],"sd":0.3,"ph":"f/kaio-cesar.jpg","ga":86,"base":89,"mod":91}],"pools":{"GOL":["ronaldo-bah","weverton-gre","pedro-morisco-cfc","carlos-miguel-pal","agustín-rossi-fla","otávio-cru"],"LD":["igor-formiga-mir","matheuzinho-cor","guillermo-varela-fla","guga-flu","agustín-giay-pal"],"LE":["lucas-esquivel-cap","renê-flu","cuiabano-vas","luciano-juba-bah","juninho-capixaba-rbb","alex-telles-bot"],"ZAG":["jonathan-jesus-cru","léo-ortiz-fla","alexander-barboza-pal","nahuel-ferraresi-bot","fabrício-bruno-cru","léo-pereira-fla","gustavo-gómez-pal","gustavo-henrique-cor","murilo-pal","jacy-cfc","arthur-dias-cap"],"MEIO":["lucas-romero-cru","jorge-carrascal-fla","thiago-mendes-vas","jorginho-fla","matheus-pereira-cru","lucho-acosta-flu","erick-pulgar-fla","nicolás-acevedo-bah","martinelli-flu","giorgian-de-arrascaeta-fla","marlon-freitas-pal","danilo-santos-bot","andreas-pereira-pal","mauricio-pal","gabriel-bontempo-san","josué-cfc"],"ATA":["samuel-lino-fla","gabriel-barbosa-san","pedro-fla","jorge-carrascal-fla","kaio-cesar-cor","kevin-viveros-cap","jhon-arias-pal","josé-manuel-lópez-pal","kaio-jorge-cru","tomás-cuello-cam","renê-vit"],"TEC":["leonardo-jardim-fla-tec","artur-jorge-cru-tec","abel-ferreira-pal-tec","marcão-flu-tec","odair-hellmann-cap-tec"],"S20":["u20-vitao","u20-pedro-lima","u20-ryan-augusto","u20-joao-cruz","u20-ze-lucas","u20-huguinho","u20-arthur-dias","u20-andre"]},"clubs":{"FLA":"Flamengo","PAL":"Palmeiras","CRU":"Cruzeiro","FLU":"Fluminense","CAP":"Athletico-PR","BAH":"Bahia","CAM":"Atlético-MG","RBB":"Bragantino","SAN":"Santos","VAS":"Vasco","SAO":"São Paulo","CFC":"Coritiba","VIT":"Vitória","BOT":"Botafogo","GRE":"Grêmio","MIR":"Mirassol","COR":"Corinthians","INT":"Internacional","REM":"Remo","CHA":"Chapecoense"}};
+const byId={};D.players.forEach(p=>byId[p.id]=p);
+const FORMS={
+ '4-3-3':[['ATA',18,15,'PE'],['ATA',50,10,'CA'],['ATA',82,15,'PD'],['MEI',24,38,'MEI'],['VOL',50,48,'VOL'],['MEI',76,38,'MEI'],['LE',12,66],['ZAG',37,71],['ZAG',63,71],['LD',88,66],['GOL',50,90]],
+ '4-3-3 VOL':[['ATA',18,15,'PE'],['ATA',50,10,'CA'],['ATA',82,15,'PD'],['MEI',50,31,'MEI'],['VOL',35,48,'VOL'],['VOL',65,48,'VOL'],['LE',12,66],['ZAG',37,71],['ZAG',63,71],['LD',88,66],['GOL',50,90]],
+ '4-4-2 linha':[['ATA',35,11,'CA'],['ATA',65,11,'CA'],['MEI',12,37,'MEI'],['VOL',37,45,'VOL'],['VOL',63,45,'VOL'],['MEI',88,37,'MEI'],['LE',12,66],['ZAG',37,71],['ZAG',63,71],['LD',88,66],['GOL',50,90]],
+ '4-4-2 losango':[['ATA',35,10,'CA'],['ATA',65,10,'CA'],['MEI',50,26,'MEI'],['MEI',20,40,'MEI'],['MEI',80,40,'MEI'],['VOL',50,50,'VOL'],['LE',12,66],['ZAG',37,71],['ZAG',63,71],['LD',88,66],['GOL',50,90]],
+ '4-5-1':[['ATA',50,10,'CA'],['MEI',12,33,'MEI'],['MEI',50,28,'MEI'],['MEI',88,33,'MEI'],['VOL',35,48,'VOL'],['VOL',65,48,'VOL'],['LE',12,66],['ZAG',37,71],['ZAG',63,71],['LD',88,66],['GOL',50,90]],
+ '3-4-3':[['ATA',18,14,'PE'],['ATA',50,10,'CA'],['ATA',82,14,'PD'],['LE',10,41],['VOL',37,46,'VOL'],['MEI',63,42,'MEI'],['LD',90,41],['ZAG',20,68],['ZAG',50,71],['ZAG',80,68],['GOL',50,90]],
+ '3-5-2':[['ATA',35,10,'CA'],['ATA',65,10,'CA'],['MEI',50,27,'MEI'],['LE',10,42],['VOL',35,46,'VOL'],['VOL',65,46,'VOL'],['LD',90,42],['ZAG',20,68],['ZAG',50,71],['ZAG',80,68],['GOL',50,90]],
+ '3-6-1':[['ATA',50,10,'CA'],['MEI',35,28,'MEI'],['MEI',65,28,'MEI'],['LE',10,41],['VOL',37,47,'VOL'],['VOL',63,47,'VOL'],['LD',90,41],['ZAG',20,68],['ZAG',50,71],['ZAG',80,68],['GOL',50,90]]};
+const POOL={GOL:'GOL',LD:'LD',LE:'LE',ZAG:'ZAG',VOL:'MEIO',MEI:'MEIO',ATA:'ATA',TEC:'TEC',S20:'S20'};
+const HINT={PE:'Ponta-esquerda',PD:'Ponta-direita',CA:'Centroavante',VOL:'Volante',MEI:'Meia'};
+const LAB={GOL:['Gols evitados','Defesas','Jogos sem sofrer gol'],LAT:['Desarmes + int./90','Passes p/ área/90','xA/90'],
+ ZAG:['Desarmes + int./90','Aéreos ganhos','Gols sofridos/90 em campo'],MC:['Desarmes + int./90','Recuperações/90','Passes progressivos/90'],
+ MP:['xA/90','Ações que geram finalização/90','Dribles certos/90'],ATA:['Gols sem pênalti','npxG/90','Finalizações no alvo/90']};
+const IXM={GOL:['Gols evitados: gols que os chutes no alvo deveriam dar (xGOT) menos os que ele sofreu','% de defesas','Saídas em bolas altas','Ações fora da área (de líbero)'],
+ LAT:['Passes que viram chance (xA)','Avanços com a bola, em passe ou condução','Passes para dentro da área','Desarmes + interceptações','% de duelos ganhos','Perdas de posse (quanto menos, melhor)'],
+ ZAG:['Desarmes + interceptações','% de duelos aéreos ganhos','Cortes + bloqueios','Passes que fazem o time avançar','% de acerto de passe','Erros que viram finalização ou gol (quanto menos, melhor)'],
+ MC:['Desarmes + interceptações','Recuperações de bola','Passes que fazem o time avançar','% de acerto de passe','Passes no terço final','% de duelos ganhos'],
+ MP:['Passes que viram chance (xA)','Qualidade das finalizações, sem pênalti (npxG)','Ações que geram finalização','Conduções e passes recebidos que fazem o time avançar','Dribles certos','Perdas de posse (quanto menos, melhor)'],
+ ATA:['Qualidade das finalizações, sem pênalti (npxG)','Gols sem pênalti','Finalizações no alvo','Toques na área','Passes que viram chance (xA)','Duelos aéreos ganhos']};
+const POSP={GOL:'goleiros',LAT:'laterais',ZAG:'zagueiros',MC:'volantes',MP:'meias e pontas',ATA:'centroavantes'};
+const FGS={TEC:[],S20:[],GOL:['GOL'],LD:['LAT'],LE:['LAT'],ZAG:['ZAG'],VOL:['MC'],MEI:['MP'],ATA:['MP','ATA']};
+const nf=(v,d=2)=>Number(v).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtSt=(g,i,v)=>{if(g==='GOL')return i===0?(v>0?'+':'')+nf(v,1):i===1?nf(v,1)+'%':String(v); if(g==='ZAG'&&i===1)return nf(v,1)+'%'; if(g==='ATA'&&i===0)return String(v); return nf(v,2)};
+const ini=n=>n.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const crest=c=>`img/${c}.png`;
+const listFor=f=>{if(f==='VOL')return D.pools.MEIO.filter(id=>byId[id].role==='Volante');if(f==='MEI')return D.pools.MEIO.filter(id=>byId[id].role!=='Volante');return D.pools[POOL[f]]};
+let form='4-3-3',picks=[],coach=null,rev=null,craque=null,active=10,sortBy='mod',filt='GOL',fmt='story';
+try{const s=JSON.parse(localStorage.getItem('selecao26v3')||'null');if(s&&FORMS[s.f]&&Array.isArray(s.p)){form=s.f;picks=s.p.map(id=>byId[id]&&byId[id].g!=='TEC'&&byId[id].g!=='S20'?id:null);coach=byId[s.t]?s.t:null;rev=byId[s.r]&&byId[s.r].g==='S20'?s.r:null;craque=byId[s.k]?s.k:null}}catch(e){}
+const S=()=>FORMS[form];
+const save=()=>{try{localStorage.setItem('selecao26v3',JSON.stringify({f:form,p:picks,t:coach,r:rev,k:craque}))}catch(e){}};
+const pitch=document.getElementById('pitch'),list=document.getElementById('list');
+const avatar=p=>p.ph?`<img class="ph" src="img/${esc(p.ph)}" alt="">`:`<span class="ini">${esc(ini(p.n))}</span>`;
+const FLAG='<svg class="flag" viewBox="0 0 20 14" aria-label="Brasil" role="img"><rect width="20" height="14" rx="1.5" fill="#009c3b"/><path d="M10 1.6 18.4 7 10 12.4 1.6 7z" fill="#ffdf00"/><circle cx="10" cy="7" r="3.1" fill="#002776"/></svg>';
+const SP=k=>k==='T'||k==='R';const KEY=v=>SP(v)?v:+v;
+const defFilt=i=>i==='T'?'TEC':i==='R'?'S20':S()[i][0];
+function drawForms(){document.getElementById('forms').innerHTML=Object.keys(FORMS).map((k,i,a)=>(i===4?'<span class="brk"></span>':'')+`<button data-k="${k}" aria-pressed="${k===form}">${k}</button>`).join('')}
+function drawPitch(){
+ pitch.querySelectorAll('.slot').forEach(e=>e.remove());
+ S().forEach(([t,x,y],i)=>{const p=byId[picks[i]];const b=document.createElement('button');
+  b.className='slot'+(p?' full':'')+(i===active?' on':'');b.style.left=Math.min(88,Math.max(12,x))+'%';b.style.top=y+'%';b.dataset.k=i;if(p)b.dataset.pid=p.id;
+  b.setAttribute('aria-label',t+(p?': '+p.n:': vazio'));
+  if(p&&craque===p.id)b.classList.add('craque');
+  b.innerHTML=p?`<span class="av"><span class="rm" data-rm="${i}" title="Tirar da vaga" aria-label="Tirar ${esc(p.n)} da vaga">×</span><span class="cq${craque===p.id?' on':''}" data-cq="${i}" title="${craque===p.id?'Craque do time':'Marcar como craque'}" aria-label="${craque===p.id?esc(p.n)+' é o craque':'Marcar '+esc(p.n)+' como craque'}">★</span>${avatar(p)}<img class="crest" src="${crest(p.c)}" alt=""></span><span class="nm">${esc(p.n)}</span>`
+   :`<span class="av">+</span><span class="ps">${t}</span>`;
+  b.addEventListener('click',()=>{if(justDragged)return;active=i;filt=defFilt(i);render();if(matchMedia('(max-width:860px)').matches)document.querySelector('.panel').scrollIntoView({behavior:'smooth',block:'start'})});
+  pitch.appendChild(b)});
+ const tr=document.getElementById('tecRow');
+ const sp=(k,c,lab,empty,rmT)=>`<button class="slot${c?' full':''}${active===k?' on':''}" data-k="${k}" ${c?`data-pid="${esc(c.id)}"`:''} aria-label="${lab.replace(/<[^>]+>/g,'').trim()}${c?': '+esc(c.n):': vazio'}">${c?`<span class="av"><span class="rm" data-rm="${k}" title="${rmT}" aria-label="${rmT}">×</span>${avatar(c)}<img class="crest" src="${crest(c.c)}" alt=""></span><span><span class="nm">${esc(c.n)}</span><span class="ps" style="display:block;margin-top:2px">${lab}</span></span>`:`<span class="av">+</span><span class="ps" style="opacity:1">${empty}</span>`}</button>`;
+ tr.innerHTML=sp('T',byId[coach],'TÉC','TÉC · escolher técnico','Tirar o técnico')+sp('R',byId[rev],'SUB-20 '+FLAG,'SUB-20 '+FLAG+' · escolher revelação','Tirar a revelação');
+ tr.querySelectorAll('.slot').forEach(b=>b.addEventListener('click',()=>{if(justDragged)return;active=b.dataset.k;filt=defFilt(active);render();if(matchMedia('(max-width:860px)').matches)document.querySelector('.panel').scrollIntoView({behavior:'smooth',block:'start'})}));
+}
+const usedIn=id=>picks.findIndex(x=>x===id);
+let justDragged=false;
+function drawList(){
+ const t=defFilt(active);
+ document.getElementById('pTitle').textContent=active==='T'?'TÉC · técnico':active==='R'?'SUB-20 · revelação brasileira':t+(S()[active][3]&&S()[active][3]!==t?' · '+HINT[S()[active][3]].toLowerCase():'');
+ document.querySelectorAll('#filt button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.f===filt));
+ document.getElementById('rmBtn').hidden=!(active==='T'?coach:active==='R'?rev:picks[active]);
+ const ga=document.querySelector('#sort [data-s=ga]');ga.hidden=filt==='GOL'||filt==='TEC'||filt==='S20';if(filt==='S20'&&sortBy==='ga')sortBy='mod';if((filt==='GOL'||filt==='TEC')&&sortBy==='ga')sortBy='mod';
+ document.getElementById('sort').hidden=filt==='TEC';
+ document.querySelectorAll('#sort button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.s===sortBy));
+ const gs=FGS[filt];
+ document.getElementById('ixLead').textContent=filt==='TEC'?'· técnicos':filt==='S20'?'· revelação sub-20':'· '+gs.map(g=>POSP[g]).join(' e ');
+ document.getElementById('ixList').innerHTML=filt==='S20'?'<li>Revelação sub-20: brasileiros que completam no máximo 20 anos em 2026 (nascidos a partir de 2006), com pelo menos 750 minutos no Brasileirão (mais de 8 jogos inteiros; minutos e jogos do Sofascore). Todos os que passam no critério estão na lista.</li><li>O modelo é o mesmo dos titulares: índice do canal e nota comparados com os jogadores da mesma posição que têm 1.440+ minutos, mais o bônus de gols. Como o índice é por 90 minutos, quem jogou menos pode aparecer alto: olhe também os minutos.</li>':filt==='TEC'?'<li>Técnico não tem índice nem nota nos aplicativos: o número dele é o aproveitamento no Brasileirão 2026 desde que assumiu o time (pontos ganhos ÷ pontos disputados). Opções: os 5 maiores aproveitamentos entre os técnicos atuais com pelo menos 10 jogos no Brasileirão.</li>':gs.map(g=>(gs.length>1?`<li style="list-style:none;margin-left:-20px;font-weight:600">${POSP[g][0].toUpperCase()+POSP[g].slice(1)}</li>`:'')+IXM[g].map(m=>`<li>${esc(m)}</li>`).join('')).join('');
+ const key={mod:p=>p.mod,idx:p=>p.idx,nota:p=>p.nota,ga:p=>p.gl+p.as}[sortBy];
+ const pool=listFor(filt).map(id=>byId[id]).sort((a,b)=>key(b)-key(a)||b.mod-a.mod);
+ document.getElementById('pCount').innerHTML=filt===t?pool.length+' opções':`mostrando <b>${filt}</b> · ${pool.length}`;
+ list.innerHTML=pool.map(p=>{if(p.g==='S20'){const sel=rev===p.id;const sub=`Sofa ${nf(p.ss)} · FotMob ${nf(p.fm)}`;return `<button class="opt${sel?' sel':''}" data-id="${esc(p.id)}" aria-pressed="${sel}">
+   <span class="av">${avatar(p)}<img class="crest" src="${crest(p.c)}" alt=""></span>
+   <span class="who"><b>${esc(p.n)}</b>${sel?'<span class="tag">sua revelação</span>':''}<span>${esc(p.role)} · ${esc(p.dob)}</span>
+    <span class="st"><span>Minutos <em>${p.min.toLocaleString('pt-BR')}</em></span><span>Jogos <em>${p.apps}</em></span><span>Gols <em>${p.gl}</em></span><span>Assistências <em>${p.as}</em></span></span></span>
+   <span class="mod"><b>${p.mod}</b><span>modelo</span><span class="nt" title="${esc(sub)}">${nf(p.nota)}<small>nota</small></span></span>
+  </button>`}
+  if(p.g==='TEC'){const sel=coach===p.id;return `<button class="opt${sel?' sel':''}" data-id="${esc(p.id)}" aria-pressed="${sel}">
+   <span class="av">${avatar(p)}<img class="crest" src="${crest(p.c)}" alt=""></span>
+   <span class="who"><b>${esc(p.n)}</b>${sel?'<span class="tag">no seu time</span>':''}<span>Técnico · no cargo desde ${esc(p.desde)}</span>
+    <span class="st"><span>Jogos no Brasileirão <em>${p.j}</em></span><span>Vitórias <em>${p.v}</em></span><span>Empates <em>${p.e}</em></span><span>Derrotas <em>${p.l}</em></span></span></span>
+   <span class="mod"><b>${nf(p.ap,1)}%</b><span>aproveitamento</span></span>
+  </button>`}
+  const u=usedIn(p.id);const sel=picks[active]===p.id;const other=u>=0&&u!==active;
+  const sub=p.fm!=null?`Sofa ${nf(p.ss)} · FotMob ${nf(p.fm)}`:`Sofa ${nf(p.ss)}`;
+  return `<button class="opt${sel?' sel':''}${other?' used':''}" data-id="${esc(p.id)}" aria-pressed="${sel}">
+   <span class="av">${avatar(p)}<img class="crest" src="${crest(p.c)}" alt=""></span>
+   <span class="who"><b>${esc(p.n)}</b>${sel?'<span class="tag">no seu time</span>':other?'<span class="tag">já escalado</span>':''}<span>${esc(p.role)} · ${p.min.toLocaleString('pt-BR')} min · ${p.g==='GOL'?p.apps+' jogos':p.gl+' G, '+p.as+' A'}</span>
+    <span class="st">${LAB[p.g].map((l,i)=>`<span>${l} <em>${fmtSt(p.g,i,p.st[i])}</em></span>`).join('')}</span></span>
+   <span class="mod"><b>${p.mod}</b><span>modelo</span><span class="nt" title="${esc(sub)}">${nf(p.nota)}<small>nota</small></span></span>
+  </button>`}).join('');
+}
+function drawSum(){
+ const ps=picks.map(id=>byId[id]).filter(Boolean);
+ document.getElementById('sMod').textContent=ps.length?Math.round(ps.reduce((x,p)=>x+p.mod,0)/ps.length):'–';
+ document.getElementById('sGA').textContent=ps.length?ps.reduce((x,p)=>x+(p.g==='GOL'?0:p.gl+p.as),0):'–';
+ const c={};ps.forEach(p=>c[p.c]=(c[p.c]||0)+1);
+ document.getElementById('clubs').innerHTML=ps.length?`<span>${ps.length} de 11:</span>`+Object.entries(c).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<i><img src="${crest(k)}" alt="">${esc(D.clubs[k])} ${v}</i>`).join(''):'<span>Seu time ainda está vazio. Comece pelo goleiro ou use o time do modelo.</span>';
+}
+function render(){if(craque&&!picks.includes(craque))craque=null;drawForms();drawPitch();drawList();drawSum();save()}
+function place(id,k){const p=byId[id];if(!p)return false;
+ if(p.g==='TEC'){if(k!=='T'){toast('Técnico só entra na vaga de TÉC.');return false}coach=id;return true}
+ if(p.g==='S20'){if(k!=='R'){toast('Essa lista é só para a vaga de SUB-20.');return false}rev=id;return true}
+ if(k==='R'){toast('Na vaga de SUB-20 só entra quem está na lista sub-20.');return false}
+ if(k==='T'){toast('Na vaga de TÉC só entra técnico.');return false}
+ const u=usedIn(id);if(u>=0)picks[u]=null;picks[k]=id;return true}
+const order=()=>{const o=['GOL','LD','ZAG','LE','VOL','MEI','ATA'];return S().map((s,i)=>i).sort((a,b)=>o.indexOf(S()[a][0])-o.indexOf(S()[b][0])||S()[b][1]-S()[a][1])};
+list.addEventListener('click',e=>{if(justDragged)return;const b=e.target.closest('.opt');if(!b)return;const id=b.dataset.id;const p=byId[id];
+ if(p.g==='TEC'){coach=coach===id?null:id;if(coach){const nx=order().find(i=>!picks[i]);if(nx!==undefined){active=nx;filt=defFilt(nx)}}render();return}
+ if(p.g==='S20'){rev=rev===id?null:id;render();return}
+ if(SP(active)){const nx=order().find(i=>!picks[i]);if(nx===undefined){toast('Escolha a vaga no campo antes.');return}active=nx}
+ if(picks[active]===id){picks[active]=null}else{place(id,active);
+  const nx=order().find(i=>!picks[i]);if(nx!==undefined){active=nx;filt=defFilt(nx)}else if(!coach){active='T';filt='TEC'}else if(!rev){active='R';filt='S20'}}
+ render();if(matchMedia('(max-width:860px)').matches)pitch.scrollIntoView({behavior:'smooth',block:'center'})});
+document.getElementById('filt').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;filt=b.dataset.f;drawList()});
+document.getElementById('sort').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;sortBy=b.dataset.s;drawList()});
+document.getElementById('forms').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.k===form)return;
+ const old=S().map((s,i)=>({pool:POOL[s[0]],t:s[0],h:s[3],id:picks[i]})).filter(x=>x.id);form=b.dataset.k;picks=S().map(()=>null);
+ for(const exact of [true,false])S().forEach((s,i)=>{if(picks[i])return;const j=old.findIndex(o=>exact?o.t===s[0]&&(!o.h||o.h===s[3]):o.pool===POOL[s[0]]);if(j>=0){picks[i]=old[j].id;old.splice(j,1)}});
+ const left=old.length;active=order().find(i=>!picks[i])??S().length-1;filt=defFilt(active);render();
+ if(left)toast(left===1?'1 jogador saiu: não cabe nessa formação.':left+' jogadores saíram: não cabem nessa formação.')});
+document.getElementById('pModel').onclick=()=>{picks=S().map(()=>null);
+ order().forEach(i=>{const [t,,,h]=S()[i];const pool=listFor(t).map(id=>byId[id]).filter(p=>!picks.includes(p.id)).sort((a,b)=>b.mod-a.mod||b.idx-a.idx);
+  const best=(h&&pool.find(p=>p.role.toLowerCase().includes(HINT[h].toLowerCase())))||pool[0];if(best)picks[i]=best.id});
+ coach=D.pools.TEC.map(id=>byId[id]).sort((a,b)=>b.ap-a.ap)[0].id;rev=D.pools.S20.map(id=>byId[id]).sort((a,b)=>b.mod-a.mod)[0].id;craque=picks.filter(Boolean).map(id=>byId[id]).sort((a,b)=>b.mod-a.mod)[0]?.id||null;active=S().length-1;filt='GOL';render();toast('Time do modelo: o maior modelo em cada vaga.')};
+document.getElementById('pClear').onclick=()=>{picks=S().map(()=>null);coach=null;rev=null;craque=null;active=S().length-1;filt='GOL';render()};
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),2600)}
+const lineup=()=>{const rows={};S().forEach(([t,x,y],i)=>{(rows[y]=rows[y]||[]).push({x,n:byId[picks[i]]?.n||'—'})});
+ return Object.keys(rows).map(Number).sort((a,b)=>b-a).map(y=>rows[y].sort((a,b)=>a.x-b.x).map(r=>r.n).join(', ')).join('; ')};
+
+/* ---------- arte ---------- */
+const imgCache={};
+const loadImg=src=>imgCache[src]||(imgCache[src]=new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src}));
+async function drawArt(kind){
+ await document.fonts.ready;
+ const W=1080,H=kind==='story'?1920:1350,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');
+ g.fillStyle='#ffffff';g.fillRect(0,0,W,H);
+ const top=kind==='story'?150:70;
+ const br=await loadImg('img/br.png');if(br){const h=kind==='story'?96:72,w=br.width*h/br.height;g.globalAlpha=.9;g.drawImage(br,W-70-w,top-8,w,h);g.globalAlpha=1}
+ g.fillStyle='#111214';g.textBaseline='top';g.font=`700 ${kind==='story'?66:56}px Poppins`;g.fillText('Minha seleção',70,top);
+ g.fillText('do Brasileirão',70,top+(kind==='story'?76:64));
+ g.font=`500 ${kind==='story'?32:28}px Poppins`;g.fillStyle='#62666e';g.fillText(`2026 · ${form}`,70,top+(kind==='story'?168:142));
+ const pTop=top+(kind==='story'?240:200),pBot=H-(kind==='story'?300:190),pH=pBot-pTop,pW=Math.min(W-140,pH*68/86),pX=(W-pW)/2;
+ const r=24;g.save();g.beginPath();g.roundRect(pX,pTop,pW,pH,r);g.clip();
+ for(let i=0;i<11;i++){g.fillStyle=i%2?'#1d2720':'#1a231d';g.fillRect(pX,pTop+pH*i/11,pW,pH/11+1)}
+ g.strokeStyle='rgba(255,255,255,.28)';g.lineWidth=3;const sx=pW/68,sy=pH/86,L=(x,y)=>[pX+x*sx,pTop+y*sy];
+ const rect=(x,y,w,h)=>{const[a,b]=L(x,y);g.strokeRect(a,b,w*sx,h*sy)};rect(2,2,64,82);rect(14,2,40,14);rect(24,2,20,5);rect(14,70,40,14);rect(24,79,20,5);
+ g.beginPath();g.moveTo(...L(2,43));g.lineTo(...L(66,43));g.stroke();g.beginPath();g.ellipse(...L(34,43),7*sx,7*sy,0,0,Math.PI*2);g.stroke();g.restore();
+ const R=Math.round(pW*0.068),FS=Math.round(R*0.46),PAD=10;
+ const nameLines=(n,maxW)=>{g.font=`600 ${FS}px Poppins`;if(g.measureText(n).width<=maxW||!n.includes(' '))return[n];const w=n.split(' ');let best=null;
+   for(let k=1;k<w.length;k++){const a=w.slice(0,k).join(' '),b=w.slice(k).join(' ');const m=Math.max(g.measureText(a).width,g.measureText(b).width);if(!best||m<best[0])best=[m,a,b]}return[best[1],best[2]]};
+ for(let i=0;i<S().length;i++){const [t,x,y]=S()[i];const p=byId[picks[i]];const cx=pX+x/100*pW,cy=pTop+y/100*pH,py=cy-14;
+  g.save();g.beginPath();g.arc(cx,py,R,0,Math.PI*2);g.closePath();
+  if(p){g.fillStyle='#e9eaee';g.fill();const ph=p.ph?await loadImg('img/'+p.ph):null;g.clip();
+   if(ph)g.drawImage(ph,cx-R,py-R,2*R,2*R);else{g.fillStyle='#3a3d44';g.font=`600 ${R*0.7}px Poppins`;g.textAlign='center';g.textBaseline='middle';g.fillText(ini(p.n),cx,py)}
+   g.restore();g.beginPath();g.arc(cx,py,R,0,Math.PI*2);g.lineWidth=4;g.strokeStyle='#ffffff';g.stroke();
+   if(p.id===craque){g.beginPath();g.arc(cx,py,R+7,0,Math.PI*2);g.lineWidth=7;g.strokeStyle='#f5b301';g.stroke();
+    const bx=cx+R*0.78,by=py-R*0.78,br=R*0.36;g.beginPath();g.arc(bx,by,br,0,Math.PI*2);g.fillStyle='#f5b301';g.fill();g.lineWidth=3;g.strokeStyle='#ffffff';g.stroke();
+    g.fillStyle='#111214';g.beginPath();for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,rr=k%2?br*0.36:br*0.78;g.lineTo(bx+rr*Math.cos(a),by+rr*Math.sin(a))}g.closePath();g.fill();
+    const lab='CRAQUE';g.font=`700 ${Math.round(R*0.3)}px Poppins`;const lw=g.measureText(lab).width+R*0.4,lh=R*0.44,ly=py-R-14-lh;
+    g.fillStyle='#f5b301';g.beginPath();g.roundRect(cx-lw/2,ly,lw,lh,lh/2);g.fill();g.fillStyle='#111214';g.textAlign='center';g.textBaseline='middle';g.fillText(lab,cx,ly+lh/2+1);g.textAlign='left'}
+   const cr=await loadImg(crest(p.c));if(cr){const s=R*0.9,w=cr.width>cr.height?s:s*cr.width/cr.height,h=cr.width>cr.height?s*cr.height/cr.width:s;g.drawImage(cr,cx+R*0.92-w/2,py+R*0.72-h/2,w,h)}
+   const maxW=pW*0.22,ls=nameLines(p.n,maxW);g.font=`600 ${FS}px Poppins`;
+   const tw=Math.min(maxW,Math.max(...ls.map(s=>g.measureText(s).width)));const tx=Math.min(Math.max(cx,pX+PAD+tw/2),pX+pW-PAD-tw/2);
+   g.fillStyle='#ffffff';g.textAlign='center';g.textBaseline='top';g.shadowColor='rgba(0,0,0,.7)';g.shadowBlur=5;
+   ls.forEach((s,j)=>g.fillText(s,tx,py+R+8+j*FS*1.12,maxW));g.shadowBlur=0}
+  else{g.setLineDash([10,8]);g.lineWidth=3;g.strokeStyle='rgba(255,255,255,.45)';g.stroke();g.restore();g.fillStyle='rgba(255,255,255,.75)';g.font=`600 ${Math.round(R*0.42)}px Poppins`;g.textAlign='center';g.textBaseline='middle';g.fillText(t,cx,py)}
+  g.textAlign='left';}
+ {const st=kind==='story',cy=pBot+(st?70:48),cr2=st?44:34,LF=`500 ${st?26:22}px Poppins`,NF=`700 ${st?32:28}px Poppins`;
+  const items=[[byId[coach],'Técnico'],[byId[rev],'Revelação sub-20']].filter(x=>x[0]);
+  const ws=items.map(([p,lab])=>{g.font=LF;const lw=g.measureText(lab).width+(p.g==='S20'?(st?44:38):0);g.font=NF;return 2*cr2+16+Math.max(lw,g.measureText(p.n).width)});
+  const GAP=st?70:50;let x0=(W-(ws.reduce((a,b)=>a+b,0)+GAP*(items.length-1)))/2;
+  for(let i=0;i<items.length;i++){const [p,lab]=items[i];const ccx=x0+cr2;const cr=await loadImg(crest(p.c));const ph=p.ph?await loadImg('img/'+p.ph):null;
+   g.save();g.beginPath();g.arc(ccx,cy,cr2,0,Math.PI*2);g.fillStyle='#e9eaee';g.fill();g.clip();
+   if(ph)g.drawImage(ph,ccx-cr2,cy-cr2,2*cr2,2*cr2);else if(p.g==='S20'){g.fillStyle='#3a3d44';g.font=`600 ${cr2*0.75}px Poppins`;g.textAlign='center';g.textBaseline='middle';g.fillText(ini(p.n),ccx,cy);g.textAlign='left'}else if(cr){const s=cr2*1.25,w=cr.width>cr.height?s:s*cr.width/cr.height,h=cr.width>cr.height?s*cr.height/cr.width:s;g.drawImage(cr,ccx-w/2,cy-h/2,w,h)}
+   g.restore();g.beginPath();g.arc(ccx,cy,cr2,0,Math.PI*2);g.lineWidth=3;g.strokeStyle='#d6d8de';g.stroke();
+   if(cr&&(ph||p.g==='S20')){const s=cr2*0.8,w=cr.width>cr.height?s:s*cr.width/cr.height,h=cr.width>cr.height?s*cr.height/cr.width:s;g.drawImage(cr,ccx+cr2*0.85-w/2,cy+cr2*0.7-h/2,w,h)}
+   const tx=x0+2*cr2+16;g.textBaseline='alphabetic';g.textAlign='left';g.fillStyle='#62666e';g.font=LF;g.fillText(lab,tx,cy-(st?6:5));
+   if(p.g==='S20'){const fw=st?34:28,fh=fw*0.7,fx=tx+g.measureText(lab).width+10,fy=cy-(st?6:5)-fh*0.95;g.fillStyle='#009c3b';g.beginPath();g.roundRect(fx,fy,fw,fh,3);g.fill();g.fillStyle='#ffdf00';g.beginPath();g.moveTo(fx+fw/2,fy+fh*0.11);g.lineTo(fx+fw*0.92,fy+fh/2);g.lineTo(fx+fw/2,fy+fh*0.89);g.lineTo(fx+fw*0.08,fy+fh/2);g.closePath();g.fill();g.fillStyle='#002776';g.beginPath();g.arc(fx+fw/2,fy+fh/2,fh*0.22,0,Math.PI*2);g.fill()}
+   g.fillStyle='#111214';g.font=NF;g.fillText(p.n,tx,cy+(st?30:26));x0+=ws[i]+GAP}}
+ const st=kind==='story',fh=st?72:56,fy=H-(st?150:84);const cl=await loadImg('img/c.png');
+ g.font=`700 ${st?40:34}px Poppins`;const hw=g.measureText('@vcanedo').width;const cw=cl?cl.width*fh/cl.height:0,ic=st?52:42,gap=18;
+ const total=cw+gap+hw+gap*1.6+ic+gap*0.8+ic;let x=(W-total)/2;const my=fy+fh/2;
+ if(cl){g.drawImage(cl,x,fy,cw,fh);x+=cw+gap}
+ g.fillStyle='#111214';g.textBaseline='middle';g.textAlign='left';g.fillText('@vcanedo',x,my+2);x+=hw+gap*1.6;
+ // YouTube
+ const yw=ic,yh=ic*0.7;g.fillStyle='#ff0000';g.beginPath();g.roundRect(x,my-yh/2,yw,yh,yh*0.28);g.fill();
+ g.fillStyle='#ffffff';g.beginPath();g.moveTo(x+yw*0.41,my-yh*0.22);g.lineTo(x+yw*0.41,my+yh*0.22);g.lineTo(x+yw*0.67,my);g.closePath();g.fill();x+=ic+gap*0.8;
+ // Instagram
+ const ig=g.createLinearGradient(x,my+ic/2,x+ic,my-ic/2);ig.addColorStop(0,'#feda75');ig.addColorStop(.3,'#fa7e1e');ig.addColorStop(.6,'#d62976');ig.addColorStop(1,'#4f5bd5');
+ g.fillStyle=ig;g.beginPath();g.roundRect(x,my-ic/2,ic,ic,ic*0.28);g.fill();g.strokeStyle='#ffffff';g.lineWidth=ic*0.075;
+ g.beginPath();g.roundRect(x+ic*0.2,my-ic*0.3,ic*0.6,ic*0.6,ic*0.17);g.stroke();g.beginPath();g.arc(x+ic/2,my,ic*0.14,0,Math.PI*2);g.stroke();
+ g.fillStyle='#ffffff';g.beginPath();g.arc(x+ic*0.66,my-ic*0.17,ic*0.04,0,Math.PI*2);g.fill();
+ return c;
+}
+const dlg=document.getElementById('dlg');let lastCanvas=null;
+async function showArt(){const c=await drawArt(fmt);lastCanvas=c;document.getElementById('prev').src=c.toDataURL('image/png');
+ document.querySelectorAll('#fmt button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===fmt))}
+document.getElementById('art').onclick=async()=>{if(!picks.some(Boolean)){toast('Escale pelo menos um jogador antes.');return}await showArt();try{dlg.showModal()}catch(e){dlg.setAttribute('open','')}};
+document.getElementById('fmt').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;fmt=b.dataset.k;showArt()});
+document.getElementById('dClose').onclick=()=>dlg.close();
+let downloads=null;
+if(window.claude&&claude.use)claude.use('downloads').then(d=>{downloads=d}).catch(()=>{});
+document.getElementById('dSave').onclick=async()=>{if(!lastCanvas)return;
+ const blob=await new Promise(r=>lastCanvas.toBlob(r,'image/png'));const fname=`minha-selecao-brasileirao-${fmt}.png`;
+ if(!downloads){
+  try{const file=new File([blob],fname,{type:'image/png'});
+   if(navigator.canShare&&matchMedia('(pointer:coarse)').matches&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Minha seleção do Brasileirão'});return}}
+  catch(e){if(e&&e.name==='AbortError')return}
+  try{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fname;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);toast('Imagem salva!')}
+  catch(e){toast('Toque e segure a imagem para salvar.')}
+  return}
+ try{await downloads.save({filename:fname,data:blob});toast('Imagem salva!')}
+ catch(err){const code=err&&err.code;if(code==='declined')return;toast('Não deu para salvar aqui: toque e segure a imagem.')}};
+if(!picks.length||picks.length!==S().length)picks=S().map((_,i)=>picks[i]||null);
+const unpick=k=>{if(k==='T')coach=null;else if(k==='R')rev=null;else picks[k]=null;active=k;filt=defFilt(k);render();toast('Vaga liberada.')};
+document.addEventListener('click',e=>{const q=e.target.closest('[data-cq]');if(!q)return;e.stopPropagation();e.preventDefault();const id=picks[+q.dataset.cq];if(!id)return;craque=craque===id?null:id;render();toast(craque?byId[id].n+' é o craque do seu time.':'Craque desmarcado.')},true);
+document.addEventListener('click',e=>{const r=e.target.closest('[data-rm]');if(!r)return;e.stopPropagation();e.preventDefault();unpick(KEY(r.dataset.rm))},true);
+document.getElementById('rmBtn').onclick=()=>unpick(active);
+/* ---------- arrastar ---------- */
+let drag=null,ghost=null;
+const slotAt=(x,y)=>{const el=document.elementFromPoint(x,y);return el&&el.closest('.slot[data-k]')};
+function beginDrag(){const p=byId[drag.id];if(!p)return;drag.started=true;ghost=document.createElement('div');ghost.className='ghost';
+ ghost.innerHTML=p.ph?`<img src="img/${esc(p.ph)}" alt="">`:esc(ini(p.n));document.body.appendChild(ghost);moveGhost(drag.lx,drag.ly);if(navigator.vibrate)try{navigator.vibrate(15)}catch(e){}}
+function moveGhost(x,y){if(!ghost)return;ghost.style.left=x+'px';ghost.style.top=y+'px';document.querySelectorAll('.slot.drop').forEach(s=>s.classList.remove('drop'));const s=slotAt(x,y);if(s)s.classList.add('drop')}
+function endDrag(x,y){const s=ghost?slotAt(x,y):null;if(ghost){ghost.remove();ghost=null}document.querySelectorAll('.slot.drop').forEach(z=>z.classList.remove('drop'));
+ if(s){const k=KEY(s.dataset.k);const from=drag.from;
+  if(from!==null&&from!==undefined&&!SP(from)&&!SP(k)){const a=picks[from];picks[from]=picks[k];picks[k]=a}
+  else if(from!==k)place(drag.id,k);
+  active=k;filt=defFilt(k);render()}
+ justDragged=true;setTimeout(()=>justDragged=false,60)}
+document.addEventListener('pointerdown',e=>{if(e.button>0||e.target.closest('[data-rm],[data-cq]'))return;const opt=e.target.closest('.opt'),sl=e.target.closest('.slot.full[data-k]');if(!opt&&!sl)return;
+ drag={id:opt?opt.dataset.id:sl.dataset.pid,from:sl?KEY(sl.dataset.k):null,x:e.clientX,y:e.clientY,lx:e.clientX,ly:e.clientY,started:false,touchList:e.pointerType!=='mouse'&&!!opt};
+ if(drag.touchList)drag.timer=setTimeout(()=>{if(drag&&!drag.started)beginDrag()},320)});
+document.addEventListener('pointermove',e=>{if(!drag)return;drag.lx=e.clientX;drag.ly=e.clientY;const d=Math.hypot(e.clientX-drag.x,e.clientY-drag.y);
+ if(!drag.started){if(drag.touchList){if(d>10){clearTimeout(drag.timer);drag=null}return}if(d>8)beginDrag();else return}
+ moveGhost(e.clientX,e.clientY)});
+document.addEventListener('touchmove',e=>{if(drag&&drag.started)e.preventDefault()},{passive:false});
+document.addEventListener('dragstart',e=>{if(e.target.closest('.slot,.opt'))e.preventDefault()});
+document.addEventListener('pointerup',e=>{if(!drag)return;clearTimeout(drag.timer);if(drag.started)endDrag(e.clientX,e.clientY);drag=null});
+document.addEventListener('pointercancel',()=>{if(!drag)return;clearTimeout(drag.timer);if(ghost){ghost.remove();ghost=null}document.querySelectorAll('.slot.drop').forEach(z=>z.classList.remove('drop'));drag=null});
+document.addEventListener('contextmenu',e=>{if(drag&&drag.touchList)e.preventDefault()});
+active=order().find(i=>!picks[i])??S().length-1;filt=defFilt(active);
+render();
+}
+</script>
+</body>
+</html>
