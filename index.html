@@ -179,7 +179,7 @@ footer .sig img{height:28px}
   </section>
 
   <section class="panel" aria-label="Opções">
-    <div class="ph2"><h2 id="pTitle">GOL</h2><span style="display:flex;gap:10px;align-items:center"><button class="btn" id="rmBtn" hidden>Tirar da vaga</button><small id="pCount"></small></span></div>
+    <div class="ph2"><h2 id="pTitle">GOL</h2><span style="display:flex;gap:10px;align-items:center"><small id="pCount"></small></span></div>
     <div class="ctrl">
       <div class="seg" id="filt" role="group" aria-label="Posição">
         <button data-f="GOL">GOL</button><button data-f="LD">LD</button><button data-f="LE">LE</button><button data-f="ZAG">ZAG</button><button data-f="VOL">VOL</button><button data-f="MEI">MEI</button><button data-f="ATA">ATA</button><button data-f="TEC">TÉC</button><button data-f="S20">SUB-20 <svg class="flag" viewBox="0 0 20 14" aria-label="Brasil" role="img"><rect width="20" height="14" rx="1.5" fill="#009c3b"/><path d="M10 1.6 18.4 7 10 12.4 1.6 7z" fill="#ffdf00"/><circle cx="10" cy="7" r="3.1" fill="#002776"/></svg></button>
@@ -281,7 +281,6 @@ function drawList(){
  const t=defFilt(active);
  document.getElementById('pTitle').textContent=active==='T'?'TÉC · técnico':active==='R'?'SUB-20 · revelação brasileira':t+(S()[active][3]&&S()[active][3]!==t?' · '+HINT[S()[active][3]].toLowerCase():'');
  document.querySelectorAll('#filt button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.f===filt));
- document.getElementById('rmBtn').hidden=!(active==='T'?coach:active==='R'?rev:picks[active]);
  const ga=document.querySelector('#sort [data-s=ga]');ga.hidden=filt==='GOL'||filt==='TEC'||filt==='S20';if(filt==='S20'&&sortBy==='ga')sortBy='mod';if((filt==='GOL'||filt==='TEC')&&sortBy==='ga')sortBy='mod';
  document.getElementById('sort').hidden=filt==='TEC';
  document.querySelectorAll('#sort button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.s===sortBy));
@@ -441,7 +440,6 @@ if(!picks.length||picks.length!==S().length)picks=S().map((_,i)=>picks[i]||null)
 const unpick=k=>{if(k==='T')coach=null;else if(k==='R')rev=null;else picks[k]=null;active=k;filt=defFilt(k);render();toast('Vaga liberada.')};
 document.addEventListener('click',e=>{const q=e.target.closest('[data-cq]');if(!q)return;e.stopPropagation();e.preventDefault();const id=picks[+q.dataset.cq];if(!id)return;craque=craque===id?null:id;render();toast(craque?byId[id].n+' é o craque do seu time.':'Craque desmarcado.')},true);
 document.addEventListener('click',e=>{const r=e.target.closest('[data-rm]');if(!r)return;e.stopPropagation();e.preventDefault();unpick(KEY(r.dataset.rm))},true);
-document.getElementById('rmBtn').onclick=()=>unpick(active);
 /* ---------- arrastar ---------- */
 let drag=null,ghost=null;
 const slotAt=(x,y)=>{const el=document.elementFromPoint(x,y);return el&&el.closest('.slot[data-k]')};
