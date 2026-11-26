@@ -139,6 +139,7 @@ footer .sig img{height:28px}
 .forms{border-radius:18px;flex-wrap:wrap;display:inline-grid;grid-template-columns:repeat(4,auto)}.forms .brk{display:none}
 @media(max-width:600px){.forms{grid-template-columns:repeat(2,auto)}}
 .flag{width:16px;height:11px;vertical-align:-1px;margin-left:3px;display:inline-block}
+.invite{display:flex;gap:10px;align-items:center;justify-content:space-between;background:#f3f3f5;border-radius:12px;padding:10px 12px;margin:10px 0 4px;font-size:13px;color:#3a3d44}.invite .btn{flex:none}
 </style>
 </head>
 <body>
@@ -212,6 +213,7 @@ footer .sig img{height:28px}
   <div class="row"><div class="seg" id="fmt" role="group" aria-label="Formato"><button data-k="story" aria-pressed="true">Story 9:16</button><button data-k="feed" aria-pressed="false">Feed 4:5</button></div><button class="btn" id="dClose">Fechar</button></div>
   <img class="prev" id="prev" alt="Prévia da arte da sua seleção">
   <div class="row"><button class="btn pri" id="dSave">Salvar a imagem</button></div>
+  <div class="invite"><span id="inv">Montei a minha seleção do Brasileirão 2026. Monte a sua: vcanedo88.github.io/selecao-brasileirao</span><button class="btn" id="dCopy">Copiar convite</button></div>
   <p id="dHint">Se o botão não funcionar no seu aparelho, toque e segure a imagem (ou clique com o botão direito) para salvar.</p>
 </dialog>
 <div id="toast" role="status"></div>
@@ -326,7 +328,7 @@ function place(id,k){const p=byId[id];if(!p)return false;
  const u=usedIn(id);if(u>=0)picks[u]=null;picks[k]=id;return true}
 const order=()=>{const o=['GOL','LD','ZAG','LE','VOL','MEI','ATA'];return S().map((s,i)=>i).sort((a,b)=>o.indexOf(S()[a][0])-o.indexOf(S()[b][0])||S()[b][1]-S()[a][1])};
 list.addEventListener('click',e=>{if(justDragged)return;const b=e.target.closest('.opt');if(!b)return;const id=b.dataset.id;const p=byId[id];
- if(p.g==='TEC'){coach=coach===id?null:id;if(coach){const nx=order().find(i=>!picks[i]);if(nx!==undefined){active=nx;filt=defFilt(nx)}}render();return}
+ if(p.g==='TEC'){coach=coach===id?null:id;if(coach){const nx=order().find(i=>!picks[i]);if(nx!==undefined){active=nx;filt=defFilt(nx)}else if(!rev){active='R';filt='S20'}}render();return}
  if(p.g==='S20'){rev=rev===id?null:id;render();return}
  if(SP(active)){const nx=order().find(i=>!picks[i]);if(nx===undefined){toast('Escolha a vaga no campo antes.');return}active=nx}
  if(picks[active]===id){picks[active]=null}else{place(id,active);
@@ -420,12 +422,15 @@ document.getElementById('art').onclick=async()=>{if(!picks.some(Boolean)){toast(
 document.getElementById('fmt').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;fmt=b.dataset.k;showArt()});
 document.getElementById('dClose').onclick=()=>dlg.close();
 let downloads=null;
+const SITE='https://vcanedo88.github.io/selecao-brasileirao/';
+const INVITE='Montei a minha seleção do Brasileirão 2026. Monte a sua: '+SITE;
+document.getElementById('dCopy').onclick=async()=>{try{await navigator.clipboard.writeText(INVITE);toast('Convite copiado. É só colar!')}catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById('inv'));const s=getSelection();s.removeAllRanges();s.addRange(r);toast('Selecionei o texto: copie e cole.')}};
 if(window.claude&&claude.use)claude.use('downloads').then(d=>{downloads=d}).catch(()=>{});
 document.getElementById('dSave').onclick=async()=>{if(!lastCanvas)return;
  const blob=await new Promise(r=>lastCanvas.toBlob(r,'image/png'));const fname=`minha-selecao-brasileirao-${fmt}.png`;
  if(!downloads){
   try{const file=new File([blob],fname,{type:'image/png'});
-   if(navigator.canShare&&matchMedia('(pointer:coarse)').matches&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Minha seleção do Brasileirão'});return}}
+   if(navigator.canShare&&matchMedia('(pointer:coarse)').matches&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Minha seleção do Brasileirão',text:INVITE});return}}
   catch(e){if(e&&e.name==='AbortError')return}
   try{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fname;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);toast('Imagem salva!')}
   catch(e){toast('Toque e segure a imagem para salvar.')}
